@@ -4,17 +4,30 @@ module.exports = {
     rules: {
         "sort-object-props": function(context) {
             var ignoreCase = context.options[0].ignoreCase;
+            var ignoreMethods = context.options[0].ignoreMethods;
             var MSG = "Property names in object literals should be sorted";
             return {
                 "ObjectExpression": function(node) {
                     node.properties.reduce(function(lastProp, prop) {
-                        var lastPropName = lastProp.key.name;
-                        var propName = prop.key.name;
-                        if (ignoreCase) {
-                            lastPropName = lastPropName.toLowerCase();
-                            propName = propName.toLowerCase();
+                        if (ignoreMethods &&
+                                prop.value.type === "FunctionExpression") {
+                            return prop;
                         }
-                        if (propName < lastPropName) {
+                        var lastPropId, propId;
+                        if (prop.key.type === "Identifier") {
+                            lastPropId = lastProp.key.name;
+                            propId = prop.key.name;
+                        } else if (prop.key.type === "Literal") {
+                            lastPropId = lastProp.key.value;
+                            propId = prop.key.value;
+                        }
+                        if (ignoreCase) {
+                            if (propId == null)
+                              console.log(prop);
+                            lastPropId = lastPropId.toLowerCase();
+                            propId = propId.toLowerCase();
+                        }
+                        if (propId < lastPropId) {
                             context.report(prop, MSG);
                         }
                         return prop;
@@ -24,6 +37,6 @@ module.exports = {
         }
     },
     rulesConfig: {
-        "sort-object-props": [ 1, "ignoreCase" ]
+        "sort-object-props": [ 1, { ignoreCase: true, ignoreMethods: false } ]
     }
 };

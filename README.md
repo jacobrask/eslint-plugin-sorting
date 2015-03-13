@@ -5,11 +5,11 @@ In the plugins section of your `.eslintrc`, add `sorting`.
         "sorting"
       ],
       "rules": {
-        "sorting/sort-object-props": [ 1, "ignoreCase" ]
+        "sorting/sort-object-props": [ 1, { ignoreCase: true, ignoreMethods: false } ]
       }
     }
 
-By default all rules are case insensitive.
+By default all rules are case insensitive and methods (functions as values) are not ignored.
 
 
 Warnings:
@@ -35,4 +35,12 @@ OK:
         e: 1,
       },
       c: "foo",
+    };
+
+
+OK if `ignoreMethods: true`
+
+    var Foo = {
+      b: function() {},
+      a: function() {}
     };
