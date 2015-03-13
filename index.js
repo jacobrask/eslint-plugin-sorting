@@ -3,7 +3,7 @@
 module.exports = {
     rules: {
         "sort-object-props": function(context) {
-            var ignoreCase = context.options[0].ignoreCase;
+            var caseSensitive = context.options[0].caseSensitive;
             var ignoreMethods = context.options[0].ignoreMethods;
             var MSG = "Property names in object literals should be sorted";
             return {
@@ -21,9 +21,7 @@ module.exports = {
                             lastPropId = lastProp.key.value;
                             propId = prop.key.value;
                         }
-                        if (ignoreCase) {
-                            if (propId == null)
-                              console.log(prop);
+                        if (caseSensitive) {
                             lastPropId = lastPropId.toLowerCase();
                             propId = propId.toLowerCase();
                         }
@@ -37,6 +35,6 @@ module.exports = {
         }
     },
     rulesConfig: {
-        "sort-object-props": [ 1, { ignoreCase: true, ignoreMethods: false } ]
+        "sort-object-props": [ 1, { caseSensitive: false, ignoreMethods: false } ]
     }
 };
