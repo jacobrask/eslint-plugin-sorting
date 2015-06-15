@@ -2,14 +2,15 @@
   "name": "eslint-plugin-sorting",
   "version": "0.0.1",
   "description": "Require property names in object literals to be sorted alphabetically.",
-  "main": "index.js",
   "keywords": [
     "eslint",
     "eslintplugin"
   ],
   "author": "Jacob Rask",
   "license": "MIT",
+  "main": "index.js",
   "peerDependencies": {
     "eslint": ">=0.8.0"
-  }
+  },
+  "repository": "jacobrask/eslint-plugin-sorting"
 }
