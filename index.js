@@ -5,6 +5,8 @@ module.exports = {
         "sort-object-props": function(context) {
             var caseSensitive = context.options[0].caseSensitive;
             var ignoreMethods = context.options[0].ignoreMethods;
+            var ignorePrivate = context.options[0].ignorePrivate;
+
             var MSG = "Property names in object literals should be sorted";
             return {
                 "ObjectExpression": function(node) {
@@ -25,6 +27,11 @@ module.exports = {
                             lastPropId = lastPropId.toLowerCase();
                             propId = propId.toLowerCase();
                         }
+
+                        if (ignorePrivate && /^_/.test(propId)) {
+                          return prop;
+                        }
+
                         if (propId < lastPropId) {
                             context.report(prop, MSG);
                         }
