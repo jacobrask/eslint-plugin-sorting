@@ -9,8 +9,5 @@
   "author": "Jacob Rask",
   "license": "MIT",
   "main": "index.js",
-  "peerDependencies": {
-    "eslint": ">=0.8.0"
-  },
   "repository": "jacobrask/eslint-plugin-sorting"
 }

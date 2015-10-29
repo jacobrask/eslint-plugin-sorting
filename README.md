@@ -1,6 +1,6 @@
 ## Install
 
-`npm install --save-dev eslint-plugin-sorting`
+`npm install --save-dev eslint eslint-plugin-sorting`
 
 In the plugins section of your `.eslintrc`, add `sorting`.
 
@@ -9,7 +9,7 @@ In the plugins section of your `.eslintrc`, add `sorting`.
         "sorting"
       ],
       "rules": {
-        "sorting/sort-object-props": [ 1, { ignoreCase: true, ignoreMethods: false } ]
+        "sorting/sort-object-props": [ 1, { "ignoreCase": true, "ignoreMethods": false } ]
       }
     }
 
