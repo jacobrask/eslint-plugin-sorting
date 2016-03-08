@@ -23,7 +23,7 @@ module.exports = {
                             lastPropId = lastProp.key.value;
                             propId = prop.key.value;
                         }
-                        if (caseSensitive) {
+                        if ((caseSensitive) && (lastPropId !== undefined)) {
                             lastPropId = lastPropId.toLowerCase();
                             propId = propId.toLowerCase();
                         }
