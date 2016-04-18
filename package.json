@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-sorting",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Require property names in object literals to be sorted alphabetically.",
   "keywords": [
     "eslint",
