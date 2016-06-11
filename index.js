@@ -15,6 +15,9 @@ module.exports = {
                                 prop.value.type === "FunctionExpression") {
                             return prop;
                         }
+                        if (prop.type === 'ExperimentalSpreadProperty') {
+                            return prop;
+                        }
                         var lastPropId, propId;
                         if (prop.key.type === "Identifier") {
                             lastPropId = lastProp.key.name;
