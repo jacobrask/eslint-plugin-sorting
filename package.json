@@ -6,6 +6,9 @@
     "eslint",
     "eslintplugin"
   ],
+  "scripts": {
+    "lint": "eslint lib/ tests/"
+  },
   "author": "Jacob Rask <jacob@jacobrask.net>",
   "license": "MIT",
   "main": "index.js",
@@ -13,5 +16,8 @@
     "type": "git",
     "url": "https://github.com/jacobrask/eslint-plugin-sorting"
   },
-  "homepage": "https://github.com/jacobrask/eslint-plugin-sorting"
+  "homepage": "https://github.com/jacobrask/eslint-plugin-sorting",
+  "devDependencies": {
+    "eslint-config-eslint": "^3.0.0"
+  }
 }
