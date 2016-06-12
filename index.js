@@ -7,7 +7,7 @@ module.exports = {
     configs: {
         recommended: {
             rules: {
-                "sort-object-props": [1, { caseSensitive: false, ignoreMethods: false }]
+                "sort-object-props": [1, { ignoreCase: true, ignoreMethods: false }]
             }
         }
     }
