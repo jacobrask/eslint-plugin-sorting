@@ -5,15 +5,25 @@ var RuleTester = require("eslint").RuleTester;
 
 var ruleTester = new RuleTester();
 var expectedError = {
-    message: "Property names in object literals should be sorted",
+    message: "Property names in an object literal should be sorted alphabetically",
     type: "Property"
 };
 
+
 ruleTester.run("sort-object-props", rule, {
     valid: [
-        "var obj = { a: 1, b: 2, c: 3 }"
+        "var obj = { a: true, b: true, c: false }",
+        "var obj = { 'a': true, b: true, 'c': false }",
+        "var obj = { a: true, b: true }",
+        "var obj = { 1: 'foo', a: 'bar', c: false }",
+        "var obj = { '1': 'foo', a: 'bar', c: false }",
+        "var obj = { A: 'eggs', a: 'spam' }"
     ],
     invalid: [
-        { code: "var obj = { b: 2, a: 1, c: 3 }", errors: [ expectedError ] }
+        { code: "var obj = { b: 'spam', a: 'eggs', c: 'foo' }", errors: [ expectedError ] },
+        { code: "var obj = { 'a': 'foo', '1': 'spam' }", errors: [ expectedError ] },
+        { code: "var obj = { a: 'foo', 1: 'spam' }", errors: [ expectedError ] },
+        { code: "var obj = { z: 'foo', a: 'spam' }", errors: [ expectedError ] },
+        { code: "var obj = { a: true, A: false }", errors: [ expectedError ] }
     ]
 });
