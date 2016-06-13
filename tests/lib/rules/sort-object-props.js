@@ -17,7 +17,8 @@ ruleTester.run("sort-object-props", rule, {
         "var obj = { a: true, b: true }",
         "var obj = { 1: 'foo', a: 'bar', c: false }",
         "var obj = { '1': 'foo', a: 'bar', c: false }",
-        "var obj = { A: 'eggs', a: 'spam' }"
+        "var obj = { A: 'eggs', a: 'spam' }",
+        { code: "var a = { a:'a' }; var b = {a:1, ...a, b:2}", "parser": "babel-eslint", rules: {strict: 0} }
     ],
     invalid: [
         { code: "var obj = { b: 'spam', a: 'eggs', c: 'foo' }", errors: [ expectedError ] },
