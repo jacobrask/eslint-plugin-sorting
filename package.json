@@ -21,6 +21,8 @@
   },
   "homepage": "https://github.com/jacobrask/eslint-plugin-sorting",
   "devDependencies": {
+    "babel-eslint": "^6.0.4",
+    "eslint": "^2.12.0",
     "eslint-config-eslint": "^3.0.0",
     "mocha": "^2.5.3"
   }
