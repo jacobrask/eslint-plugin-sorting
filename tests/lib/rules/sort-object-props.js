@@ -21,7 +21,8 @@ ruleTester.run("sort-object-props", rule, {
         { code: "var a = { a:'a' }; var b = {a:1, ...a, b:2}", "parser": "babel-eslint", rules: {strict: 0} },
         { code: "var a = { [a()]: 'a' }", "parser": "babel-eslint", rules: {strict: 0} },
         { code: "var a = { [a?b:c]: d }", "parser": "babel-eslint", rules: {strict: 0} },
-        { code: "var a = { b: c }; var d = {[a.b]: e}", "parser": "babel-eslint", rules: {strict: 0} }
+        { code: "var a = { b: c }; var d = {[a.b]: e}", "parser": "babel-eslint", rules: {strict: 0} },
+        { code: "var a = { [a + b]: c}", "parser": "babel-eslint", rules: {strict: 0} }
     ],
     invalid: [
         { code: "var obj = { b: 'spam', a: 'eggs', c: 'foo' }", errors: [ expectedError ] },
