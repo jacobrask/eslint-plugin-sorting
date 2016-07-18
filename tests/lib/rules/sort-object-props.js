@@ -9,26 +9,79 @@ var expectedError = {
     type: "Property"
 };
 
+/**
+ * Wraps a block of code and that needs to be tested with babel-eslint
+ * @param {String} code: Code to be tested
+ * @returns {object} Object that will be tested
+ */
+function transpile(code) {
+    return {
+        code: code,
+        parser: "babel-eslint",
+        rules: {strict: 0}
+    };
+}
+
+/**
+ * Wraps a block of code and that that should error
+ * @param {String} code: Code to be tested
+ * @returns {object} Object that will be tested
+ */
+function expectError(code) {
+    return {
+        code: code,
+        errors: [ expectedError ]
+    };
+}
+
+/**
+ * Wraps a block of code that needs to be tested with babel-eslint and will error
+ * @param {String} code: Code to be tested
+ * @returns {object} Object that will be tested
+ */
+function transpileExpectError(code) {
+    return {
+        code: code,
+        errors: [ expectedError ],
+        parser: "babel-eslint",
+        rules: {strict: 0}
+    };
+}
+
 
 ruleTester.run("sort-object-props", rule, {
     valid: [
+        "var obj = { a: true, apple: true }",
         "var obj = { a: true, b: true, c: false }",
         "var obj = { 'a': true, b: true, 'c': false }",
         "var obj = { a: true, b: true }",
         "var obj = { 1: 'foo', a: 'bar', c: false }",
         "var obj = { '1': 'foo', a: 'bar', c: false }",
         "var obj = { A: 'eggs', a: 'spam' }",
-        { code: "var a = { a:'a' }; var b = {a:1, ...a, b:2}", "parser": "babel-eslint", rules: {strict: 0} },
-        { code: "var a = { [a()]: 'a' }", "parser": "babel-eslint", rules: {strict: 0} },
-        { code: "var a = { [a?b:c]: d }", "parser": "babel-eslint", rules: {strict: 0} },
-        { code: "var a = { b: c }; var d = {[a.b]: e}", "parser": "babel-eslint", rules: {strict: 0} },
-        { code: "var a = { [a + b]: c}", "parser": "babel-eslint", rules: {strict: 0} }
+        "var obj = { false: 'eggs', true: 'spam' }",
+        transpile("var template = { [`${a}-key`]: 'foo', 'b-key': 'bar' }"),
+        transpile("var templateWithBinaryExpression = { [`${a + b}-value`]: false, 'b+a': true }"),
+        transpile("var spread = { a:'a' }; var b = {a:1, ...a, b:2}"),
+        transpile("var functionCall = { [a()]: 'a', [b()]: 'b' }"),
+        transpile("var functionCallWithArg = { [a('apple')]: 'a', [a('banana')]: 'b' }"),
+        transpile("var functionCallWithArgs = { [a('apple','banana')]: 'a', [a('apple','orange')]: 'b' }"),
+        transpile("var conditional = { [a?b:c]: d }"),
+        transpile("var conditional = { [a ? b : c]: d }"),
+        transpile("var conditional = { [(a !== b)?b:c]: d, [(a === b)?b:c]: d,  }"),
+        transpile("var member = {[a.b]: c}"),
+        transpile("var nestedMember = {[a[b][c]]: d, [b[a][c]]: d}"),
+        transpile("var binaryExpression = { [a + b]: c}")
     ],
     invalid: [
-        { code: "var obj = { b: 'spam', a: 'eggs', c: 'foo' }", errors: [ expectedError ] },
-        { code: "var obj = { 'a': 'foo', '1': 'spam' }", errors: [ expectedError ] },
-        { code: "var obj = { a: 'foo', 1: 'spam' }", errors: [ expectedError ] },
-        { code: "var obj = { z: 'foo', a: 'spam' }", errors: [ expectedError ] },
-        { code: "var obj = { a: true, A: false }", errors: [ expectedError ] }
+        expectError("var obj = { b: 'spam', a: 'eggs', c: 'foo' }"),
+        expectError("var obj = { 'a': 'foo', '1': 'spam' }"),
+        expectError("var obj = { a: 'foo', 1: 'spam' }"),
+        expectError("var obj = { z: 'foo', a: 'spam' }"),
+        expectError("var obj = { a: true, A: false }"),
+        transpileExpectError("var functionCallWithArg = { [a('banana')]: 'a', [a('apple')]: 'b' }"),
+        transpileExpectError("var functionCallWithArgs = { [a('apple','orange')]: 'a', [a('apple','banana')]: 'b' }"),
+        transpileExpectError("var conditional = { [c?b:a]: d, [a?b:c]: d }"),
+        transpileExpectError("var nestedMember = {[b[a][c]]: d, [a[b][c]]: d}"),
+        transpileExpectError("var binaryExpression = { apple: true, [a + b]: c}")
     ]
 });
