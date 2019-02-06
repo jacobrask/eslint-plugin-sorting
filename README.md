@@ -10,7 +10,11 @@ In the plugins section of your `.eslintrc`, add `sorting`.
     "sorting"
   ],
   "rules": {
-    "sorting/sort-object-props": [ 1, { "ignoreCase": true, "ignoreMethods": false } ]
+    "sorting/sort-object-props": [ 1, {
+      "ignoreCase": true,
+      "ignoreMethods": false,
+      "ignoreMethodSiblings": false
+    } ]
   }
 }
 ```
@@ -53,6 +57,16 @@ OK if `ignoreMethods: true`
 ```js
 var Foo = {
   b: function() {},
+  a: function() {}
+};
+```
+
+OK if `ignoreMethodSiblings: true`
+
+```js
+var Foo = {
+  c: 1,
+  b: 2,
   a: function() {}
 };
 ```
