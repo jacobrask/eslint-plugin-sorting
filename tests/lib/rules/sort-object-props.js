@@ -75,7 +75,7 @@ ruleTester.run("sort-object-props", rule, {
         transpile("var binaryExpression = { [a + b]: c}"),
         transpile("var withMethods = { b: function() {}, a: function() {} }", [ { ignoreMethods: true } ]),
         transpile("var withMethodSiblings = { c: 1, b: 2, a: function() {} }", [ { ignoreMethodSiblings: true } ]),
-        transpile("var withMethodSiblings = { c: 1, b: 2, ...a, a: () => {} }", [ { ignoreMethodSiblings: true } ]),
+        transpile("var withMethodSiblings = { ...d, c: 1, b: 2, a: () => {} }", [ { ignoreMethodSiblings: true } ]),
         transpile("var withMethodSiblings = { c: 1, b: 2, a() {} }", [ { ignoreMethodSiblings: true } ])
     ],
     invalid: [
